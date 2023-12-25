@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segunda entrega javascript</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Figtree:wght@900&family=Kotta+One&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+    <header>
+        <div class="navbar"> 
+            <img src="./assets/logo.jpg" alt="logo de tu prestamo ya, una mano le entrega dinero a otra mano" />
+            <ul>
+                <li>
+                    <a href= "#inicio">Inicio</a>
+                </li>
+                <li>
+                    <a href="#nosotros">Nosotros</a>
+                </li>
+                <li>
+                    <a href="#simulador">Simulador</a>
+                </li>
+                <li>
+                    <a href="#contacto">Contacto</a>
+                </li>
+            </ul>
+        </div>
+
+    </header>
+    <main>
+        <div class="inicio">
+            <h1>
+                Somos tu prestamo, ya!
+            </h1>
+
+        </div>
+        <div class="nosotros">
+            <h2>Acerca de nosotros</h2>
+            <p>Somos una empresa dedicada a facilitarle la vida a todo aquel que lo necesite.
+                Contamos con mas de 30 años de trayectoria y experiencia.
+            </p>
+
+        </div>
+        <div class="simulador">
+            <h3>Simulá tu prestamo</h3>
+            <form action="">
+                <fieldset>
+                    <legend>Simula tu Prestamo Ya!</legend>
+
+                    <label for="Nombre">ingresa tu nombre:</label>
+                    <input type="text" id="Nombre" placeholder="ingrea tu nombre aquí" required />
+
+                    <label for="Nombre">ingresa tu apellido:</label>
+                    <input type="text" id="Apellido" placeholder="ingrea tu apellido aquí" required />
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" placeholder="escribe tu direccion de e-mail" required />
+
+                    <label for="numero">Ingresa el monto del prestamo</label>
+                    <input type="number" id=""numero" placeholder="ingresa el monto del prestamo" min"0" max"1000000">
+
+                    <label for="numero">Ingresa el porcentaje de interés</label>
+                    <input type="number" id=""numero" placeholder="ingresa el porcentaje de interes" min"15" max"100">
+
+                    <label for="numero">Ingresa la cantidad de cuotas que deseas</label>
+                    <input type="number" id=""numero" placeholder="ingresa la cantidad de cuotas que deseas" min"0" max"100">
+
+                    <input type="button" value="Calcular Préstamo">
+                    <input type="button" value="Solicitar Préstamo">
+                </fieldset>
+            </form>
+
+        </div>
+        <div class="contacto">
+
+            <p> PODÉS CONTACTARNOS
+            Al telefono 24576145,
+            por whatsapp al 099246875,
+            via mail: escribinos a tuprestamoya@gmail.com,
+            o visitá nuestras oficinas en 18 de julio 1542, Montevideo, Uruguay. 
+            </p>
+
+        </div>
+
+
+    </main>
+    <footer>
+
+    </footer>
+    <img src="./assets/logo.jpg" alt="logo de tu prestamo ya, una mano le entrega dinero a otra mano">
+    <img src="./assets/facebook.png" alt="logo de facebook, circulo azul con letra f">
+    <img src="./assets/instagram.png" alt="logo de instagram, vector de camara antigua de colores">
+    <img src="./assets/whatsapp.png" alt="logo de whatsapp, circulo verde con telefono">
+
+
+    <script src="./js/index.js"></script>
+</body>
+</html>
