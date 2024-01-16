@@ -1,41 +1,92 @@
-  // Objeto para almacenar datos del solicitante
-  
+
+// Objeto para almacenar datos del solicitante
 const datosSolicitante = {
-  nombre: "nombre",
-  apellido: "apellido",
-  email: "email"
+  nombre: "",
+  apellido: "",
+  email: ""
 };
 
 // Objeto para almacenar datos del préstamo
-
 const datosPrestamo = {
-  monto: "monto",
-  interes: "interes",
-  cuotas: "cuotas"
+  monto: 0,
+  interes: 0,
+  cuotas: 0
 };
 
 // Array para almacenar detalles de préstamos
+let historialPrestamos = [];
 
-const historialPrestamos = [];
+// Obtener referencias a elementos del formulario y botón
+const formulario = document.getElementById('prestamoForm');
+const nombreInput = document.getElementById('Nombre');
+const apellidoInput = document.getElementById('Apellido');
+const emailInput = document.getElementById('email');
+const montoInput = document.getElementById('monto');
+const interesInput = document.getElementById('interes');
+const cuotasInput = document.getElementById('cuotas');
+const calcularSolicitarBtn = document.getElementById('calcularSolicitar');
 
-// Función para solicitar datos del solicitante
+// Función principal para manejar los préstamos
+function manejarSolicitudPrestamo() {
+  solicitarDatosSolicitante();
+  solicitarDatosPrestamo();
+  const resultadoPrestamo = calcularPrestamo();
+  mostrarDetalles(datosSolicitante, datosPrestamo.monto, datosPrestamo.interes, datosPrestamo.cuotas, resultadoPrestamo);
 
-function solicitarDatosSolicitante() {
-  datosSolicitante.nombre = prompt("Ingresa tu nombre:");
-  datosSolicitante.apellido = prompt("Ingresa tu apellido:");
-  datosSolicitante.email = prompt("Ingresa tu dirección de correo electrónico:");
+  historialPrestamos.push({
+    solicitante: { ...datosSolicitante },
+    prestamo: { ...datosPrestamo },
+    resultado: { ...resultadoPrestamo }
+  });
+
+ // Almacenar en localStorage todo el historial de préstamos
+localStorage.setItem('historialPrestamos', JSON.stringify(historialPrestamos));
+
+// Recuperar el historial de préstamos almacenado en localStorage
+const historialAlmacenado = JSON.parse(localStorage.getItem('historialPrestamos'));
+
+// Verificar si hay datos almacenados y mostrar el historial si es así
+if (historialAlmacenado && historialAlmacenado.length > 0) {
+  historialPrestamos = historialAlmacenado;
+  mostrarHistorialPrestamos();
+} else {
+  console.log("No hay préstamos almacenados en el historial.");
 }
 
-// Función para solicitar datos del préstamo
+  // Limpiar el formulario
+  formulario.reset();
+}
 
+// Manejar la presentación de préstamos cuando se hace clic en el botón
+calcularSolicitarBtn.addEventListener('click', function () {
+  manejarSolicitudPrestamo();
+
+  const continuar = confirm("¿Deseas solicitar otro préstamo?");
+  if (!continuar) {
+    swal.fire({
+      title: "¡Muchas Gracias!",
+      text:" Gracias por usar el simulador",
+      icon: "success",
+      confirmButtonText:"OK"
+    });
+  }
+});
+
+// Función para solicitar datos del solicitante desde el formulario
+function solicitarDatosSolicitante() {
+  datosSolicitante.nombre = nombreInput.value;
+  datosSolicitante.apellido = apellidoInput.value;
+  datosSolicitante.email = emailInput.value;
+}
+
+// Función para solicitar datos del préstamo desde el formulario
 function solicitarDatosPrestamo() {
-  datosPrestamo.monto = parseFloat(prompt("Ingresa el monto del préstamo:"));
-  datosPrestamo.interes = parseFloat(prompt("Ingresa el porcentaje de interés:"));
-  datosPrestamo.cuotas = parseInt(prompt("Ingresa la cantidad de cuotas deseadas:"));
+  datosPrestamo.monto = parseFloat(montoInput.value);
+  datosPrestamo.interes = parseFloat(interesInput.value);
+  datosPrestamo.cuotas = parseInt(cuotasInput.value);
 }
 
 // Función para calcular el préstamo
-
 function calcularPrestamo() {
   const totalInteres = (datosPrestamo.monto * datosPrestamo.interes) / 100;
   const totalPrestamo = datosPrestamo.monto + totalInteres;
@@ -49,7 +100,6 @@ function calcularPrestamo() {
 }
 
 // Función para mostrar detalles
-
 function mostrarDetalles(solicitante, montoPrestamo, porcentajeInteres, cuotas, resultadoPrestamo) {
   console.log("Detalles del solicitante:");
   console.log(solicitante);
@@ -61,36 +111,6 @@ function mostrarDetalles(solicitante, montoPrestamo, porcentajeInteres, cuotas, 
   console.log("Total a pagar: $" + resultadoPrestamo.totalPrestamo);
   console.log("Intereses totales: $" + resultadoPrestamo.totalInteres);
   console.log("Pago mensual: $" + resultadoPrestamo.pagoMensual);
-
-  alert("Detalles del solicitante:\n\n" +
-    "Nombre: " + solicitante.nombre + "\n" +
-    "Apellido: " + solicitante.apellido + "\n" +
-    "Email: " + solicitante.email + "\n\n" +
-    "Detalles del préstamo:\n\n" +
-    "Total a pagar: $" + resultadoPrestamo.totalPrestamo + "\n" +
-    "Intereses totales: $" + resultadoPrestamo.totalInteres + "\n" +
-    "Pago mensual: $" + resultadoPrestamo.pagoMensual);
-}
-
-let solicitarPrestamo = true;
-
-while (solicitarPrestamo) {
-  solicitarDatosSolicitante();
-  solicitarDatosPrestamo();
-  const resultadoPrestamo = calcularPrestamo();
-  mostrarDetalles(datosSolicitante, datosPrestamo.monto, datosPrestamo.interes, datosPrestamo.cuotas, resultadoPrestamo);
-
-  historialPrestamos.push({
-    solicitante: { ...datosSolicitante },
-    prestamo: { ...datosPrestamo },
-    resultado: { ...resultadoPrestamo }
-  });
-
-  const continuar = prompt("¿Deseas solicitar otro préstamo? (Si/No)").toLowerCase();
-  if (continuar !== 'si') {
-    solicitarPrestamo = false;
-    alert("¡Gracias! Hasta luego.");
-  }
 }
 
 // Función para mostrar el historial de préstamos
@@ -106,23 +126,14 @@ function mostrarHistorialPrestamos() {
   });
 }
 
-// Mostrar historial de préstamos
+ // Redirigir al usuario a la página del BROU con el tipo de cambio
+document.getElementById('verTipoDeCambioBtn').addEventListener('click', () =>{
 
-mostrarHistorialPrestamos();
-
-// Método para obtener el monto total prestado
-
-function obtenerMontoTotalPrestado() {
-    const montoTotal = historialPrestamos.reduce((total, prestamo) => {
-      return total + prestamo.prestamo.monto;
-    }, 0);
+  window.open('https://www.brou.com.uy/cotizaciones', '_blank');
   
-    console.log(`El monto total prestado en todos los préstamos es: $${montoTotal.toFixed(2)}`);
-  }
+  console.log("El usuario solicitó el tipo de cambio.");
+});
 
-  // Mostrar el monto total prestado
-
-  obtenerMontoTotalPrestado();
 
 
 

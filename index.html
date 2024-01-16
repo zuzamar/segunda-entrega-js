@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Segunda entrega javascript</title>
-
+    <title>tercera entrega javascript</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Figtree:wght@900&family=Kotta+One&display=swap" rel="stylesheet">
-
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Figtree:wght@900&family=Kotta+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 </head>
 <body>
@@ -19,7 +18,7 @@
             <img src="./assets/logo.jpg" alt="logo de tu prestamo ya, una mano le entrega dinero a otra mano" />
             <ul>
                 <li>
-                    <a href= "#inicio">Inicio</a>
+                    <a href="#inicio">Inicio</a>
                 </li>
                 <li>
                     <a href="#nosotros">Nosotros</a>
@@ -32,74 +31,95 @@
                 </li>
             </ul>
         </div>
-
     </header>
     <main>
-        <div class="inicio">
-            <h1>
-                Somos tu prestamo, ya!
-            </h1>
+        <section id="inicio">
+            <div class="classInicio">
+                <h1>Somos tu prestamo, <br>
+                    ya!</h1>
+            </div>
+        </section>
 
-        </div>
-        <div class="nosotros">
-            <h2>Acerca de nosotros</h2>
-            <p>Somos una empresa dedicada a facilitarle la vida a todo aquel que lo necesite.
-                Contamos con mas de 30 años de trayectoria y experiencia.
-            </p>
+        <section id="nosotros">
+            <div class="classNosotros">
+                <h2>Acerca de nosotros</h2>
+                
+                <div id="cards">
+                    <div class="card1">
+                    <img src="./assets/hipotecario.jpg" alt="prestamo para vivienda, se entrega casa y llaves">
+                    </div>
+                    <div class="card2">
+                        <img src="./assets/comprar-auto.jpg" alt= "ahorro de dinero para compara auto">
+                    </div>
+                    <div class="card3">
+                        <img src="./assets/dinero.jpg" alt="muchos billetes de dolares">
+                    </div>
+                </div>
+                <p>Somos una empresa dedicada a facilitarle la vida a todo aquel que lo necesite.
+                    Contamos con más de 30 años de trayectoria y experiencia.
+                </p>
+            </div>
+        </section>
 
-        </div>
-        <div class="simulador">
-            <h3>Simulá tu prestamo</h3>
-            <form action="">
-                <fieldset>
-                    <legend>Simula tu Prestamo Ya!</legend>
+        <section id="simulador">
+            <div class="classSimulador">
+                <h3>Simulá tu prestamo</h3>
+                <form id="prestamoForm">
+                    <fieldset>
+                        <legend>Simula tu Préstamo Ya!</legend>
 
-                    <label for="Nombre">ingresa tu nombre:</label>
-                    <input type="text" id="Nombre" placeholder="ingrea tu nombre aquí" required />
+                        <label for="Nombre">Ingresa tu nombre:</label>
+                        <input type="text" id="Nombre" placeholder="Ingresa tu nombre aquí" required />
 
-                    <label for="Nombre">ingresa tu apellido:</label>
-                    <input type="text" id="Apellido" placeholder="ingrea tu apellido aquí" required />
+                        <label for="Apellido">Ingresa tu apellido:</label>
+                        <input type="text" id="Apellido" placeholder="Ingresa tu apellido aquí" required />
 
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" placeholder="escribe tu direccion de e-mail" required />
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" placeholder="Escribe tu dirección de e-mail" required />
 
-                    <label for="numero">Ingresa el monto del prestamo</label>
-                    <input type="number" id=""numero" placeholder="ingresa el monto del prestamo" min"0" max"1000000">
+                        <label for="monto">Ingresa el monto del préstamo</label>
+                        <input type="number" id="monto" placeholder="Ingresa el monto del préstamo" min="0" max="1000000" required>
 
-                    <label for="numero">Ingresa el porcentaje de interés</label>
-                    <input type="number" id=""numero" placeholder="ingresa el porcentaje de interes" min"15" max"100">
+                        <label for="interes">Ingresa el porcentaje de interés</label>
+                        <input type="number" id="interes" placeholder="Ingresa el porcentaje de interés" min="15" max="100" required>
 
-                    <label for="numero">Ingresa la cantidad de cuotas que deseas</label>
-                    <input type="number" id=""numero" placeholder="ingresa la cantidad de cuotas que deseas" min"0" max"100">
+                        <label for="cuotas">Ingresa la cantidad de cuotas que deseas</label>
+                        <input type="number" id="cuotas" placeholder="Ingresa la cantidad de cuotas que deseas" min="0" max="100" required>
 
-                    <input type="button" value="Calcular Préstamo">
-                    <input type="button" value="Solicitar Préstamo">
-                </fieldset>
-            </form>
+                        <button type="button" id="calcularSolicitar">Calcular y Solicitar Préstamo</button>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="resultadoPrestamo" class="resultado"></div>
+            <div class="tipoCambio">
+                <p> quieres consultar el tipo de cambio del día de hoy?</p>
+                <button id="verTipoDeCambioBtn">Ver Tipo de Cambio</button>
+            </div>
+        </section>
 
-        </div>
-        <div class="contacto">
-
-            <p> PODÉS CONTACTARNOS
-            Al telefono 24576145,
-            por whatsapp al 099246875,
-            via mail: escribinos a tuprestamoya@gmail.com,
-            o visitá nuestras oficinas en 18 de julio 1542, Montevideo, Uruguay. 
-            </p>
-
-        </div>
-
-
+        <section id="contacto">
+            <div class=" classContacto">
+                <p> PODÉS CONTACTARNOS
+                Al teléfono 24576145,
+                por WhatsApp al 099246875,
+                vía mail: escríbenos a tuprestamoya@gmail.com,
+                o visita nuestras oficinas en 18 de julio 1542, Montevideo, Uruguay. 
+                </p>
+            </div>
+        </section>
     </main>
+
     <footer>
-
-    </footer>
+        <div class="foot">
     <img src="./assets/logo.jpg" alt="logo de tu prestamo ya, una mano le entrega dinero a otra mano">
-    <img src="./assets/facebook.png" alt="logo de facebook, circulo azul con letra f">
-    <img src="./assets/instagram.png" alt="logo de instagram, vector de camara antigua de colores">
-    <img src="./assets/whatsapp.png" alt="logo de whatsapp, circulo verde con telefono">
+    <img src="./assets/facebook.png" alt="logo de Facebook, círculo azul con letra f">
+    <img src="./assets/instagram.png" alt="logo de Instagram, vector de cámara antigua de colores">
+    <img src="./assets/whatsapp.png" alt="logo de WhatsApp, círculo verde con teléfono">
+        </div>
+    </footer>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./js/index.js"></script> 
 
-    <script src="./js/index.js"></script>
 </body>
 </html>
