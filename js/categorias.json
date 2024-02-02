@@ -1,0 +1,5 @@
+[
+{"prestamo":" hipotecario","monto":"U$S 200000","plazo":"10 años","taza":"4,75"},
+{"prestamo":" automotriz","monto":"U$S 30000","plazo":"4 años","taza":"4,75"},
+{"prestamo":" personal","monto":"U$S 10000","plazo":"2 años","taza":"5,75"}
+]

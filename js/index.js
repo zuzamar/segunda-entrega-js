@@ -1,5 +1,23 @@
+const mensaje= "YA!, tu prestamo."
+const elemento= document.getElementById("nombre");
+let indice=0;
+
+//funcion para añadir letras
+
+function mostrarLetra () {
+elemento.textContent += mensaje[indice];
+indice++;
+
+//verificar que no queden letras
+
+if( indice < mensaje.length) {
+  setTimeout(mostrarLetra, 300);
+}
+  }
+  setTimeout( mostrarLetra, 2000);
 
 // Objeto para almacenar datos del solicitante
+
 const datosSolicitante = {
   nombre: "",
   apellido: "",
@@ -63,13 +81,29 @@ calcularSolicitarBtn.addEventListener('click', function () {
 
   const continuar = confirm("¿Deseas solicitar otro préstamo?");
   if (!continuar) {
-    swal.fire({
+    Swal.fire({
       title: "¡Muchas Gracias!",
-      text:" Gracias por usar el simulador",
+      text: "Gracias por usar el simulador",
       icon: "success",
-      confirmButtonText:"OK"
+      confirmButtonText: "OK",
+      showClass: {
+        popup: "animate__animated animate__bounceInDown"
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOutUp"
+      }
     });
   }
+  Toastify({
+    text: "Préstamo simulado con éxito",
+    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+    duration: 4000,
+    close: true,
+    gravity: "bottom",
+    position: "center",
+    stopOnFocus: true, 
+  }).showToast();
+
 });
 
 // Función para solicitar datos del solicitante desde el formulario
@@ -99,41 +133,66 @@ function calcularPrestamo() {
   };
 }
 
-// Función para mostrar detalles
-function mostrarDetalles(solicitante, montoPrestamo, porcentajeInteres, cuotas, resultadoPrestamo) {
-  console.log("Detalles del solicitante:");
-  console.log(solicitante);
-  console.log("\nDetalles del préstamo:");
-  console.log("Monto del préstamo: $" + montoPrestamo);
-  console.log("Porcentaje de interés: " + porcentajeInteres + "%");
-  console.log("Cantidad de cuotas: " + cuotas);
-  console.log("--------------------------");
-  console.log("Total a pagar: $" + resultadoPrestamo.totalPrestamo);
-  console.log("Intereses totales: $" + resultadoPrestamo.totalInteres);
-  console.log("Pago mensual: $" + resultadoPrestamo.pagoMensual);
-}
-
-// Función para mostrar el historial de préstamos
-
-function mostrarHistorialPrestamos() {
-  historialPrestamos.forEach((prestamo, index) => {
-    console.log(`\nPréstamo ${index + 1}:`);
-    console.log(`Nombre: ${prestamo.solicitante.nombre}`);
-    console.log(`Apellido: ${prestamo.solicitante.apellido}`);
-    console.log(`Monto del préstamo: $${prestamo.prestamo.monto}`);
-    console.log(`Cuotas a pagar: ${prestamo.prestamo.cuotas}`);
-    console.log("--------------------------");
-  });
-}
-
- // Redirigir al usuario a la página del BROU con el tipo de cambio
-document.getElementById('verTipoDeCambioBtn').addEventListener('click', () =>{
-
-  window.open('https://www.brou.com.uy/cotizaciones', '_blank');
+  // Función para mostrar detalles y resultados en pantalla
+  function mostrarDetalles(solicitante, montoPrestamo, porcentajeInteres, cuotas, resultadoPrestamo) {
+    const resultadoElement = document.getElementById('resultadoPrestamo');
   
-  console.log("El usuario solicitó el tipo de cambio.");
-});
+    // Construir el contenido HTML para mostrar los resultados
+    const contenidoHTML = `
+      <p>Detalles del solicitante:</p>
+      <p>Nombre: ${solicitante.nombre} ${solicitante.apellido}</p>
+      <p>Detalles del préstamo:</p>
+      <p>Monto del préstamo: $${montoPrestamo}</p>
+      <p>Porcentaje de interés: ${porcentajeInteres}%</p>
+      <p>Cantidad de cuotas: ${cuotas}</p>
+      <hr>
+      <p>Total a pagar: $${resultadoPrestamo.totalPrestamo}</p>
+      <p>Intereses totales: $${resultadoPrestamo.totalInteres}</p>
+      <p>Pago mensual: $${resultadoPrestamo.pagoMensual}</p>
+    `;
+  
+    // Actualizar el contenido del elemento resultadoPrestamo
+    resultadoElement.innerHTML = contenidoHTML;
+    resultadoElement.classList.add('estilo-html-js');
+  }
+  
+  // Función para mostrar el historial de préstamos
+  function mostrarHistorialPrestamos() {
+    historialPrestamos.forEach((prestamo, index) => {
+      console.log(`\nPréstamo ${index + 1}:`);
+      console.log(`Nombre: ${prestamo.solicitante.nombre}`);
+      console.log(`Apellido: ${prestamo.solicitante.apellido}`);
+      console.log(`Monto del préstamo: $${prestamo.prestamo.monto}`);
+      console.log(`Cuotas a pagar: ${prestamo.prestamo.cuotas}`);
+      console.log("--------------------------");
+    });
+  }
+  
+  // Redirigir al usuario a la página del BROU con el tipo de cambio
+  document.getElementById('verTipoDeCambioBtn').addEventListener('click', () => {
+    window.open('https://www.brou.com.uy/cotizaciones', '_blank');
+    console.log("El usuario solicitó el tipo de cambio.");
+  });
 
+  //crear lista con las categorias de prestamos preestablecidos
+const listaCategorias= document.getElementById("categorias")
 
+fetch("./js/categorias.json")
+  .then(response => {
+    
+    if (!response.ok) {
+      throw new Error('Error al cargar el archivo JSON');
+    }
 
-
+    return response.json();
+  })
+  .then(data => {
+    data.forEach(categorias => {
+      const li = document.createElement("li")
+      li.innerHTML = "Prestamo: " + categorias.prestamo + "<br>Monto máximo: " + categorias.monto+ "<br>Plazo máximo: " + categorias.plazo + "<br>Tasa: " + categorias.taza;
+      listaCategorias.append(li);
+    });
+  })
+  .catch(error => {
+    console.error(error);
+  });
